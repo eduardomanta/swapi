@@ -11,7 +11,7 @@
 # Instalación
 
 - Clonar el repositorio   https://github.com/eduardomanta/swapi.git
-- Crear el archivo  "env/params-local.yml" y  "env/params-dev.yml" para ejecutar la aplicación en entorno local y en modo dev (serverless deploy)
+- Crear el archivo  "env/params-local.yml" y  "env/params-dev.yml" para ejecutar la aplicación en entorno local y en modo dev (serverless deploy) respectivamente
 - Crear el archivo .env para ejecutar las pruebas unitarias
 
 # Comandos
@@ -19,6 +19,14 @@
 - npm run test: ejecuta las pruebas unitarias (considerar archivo .env)
 - serverless config credentials  --provider aws --key  <key> --secret <secret> --overwrite: configuracion de entorno para realizar el despliegue
 - serverless deploy: desplegar la aplicación en AWS
+
+# Variables de entorno
+
+- NODE_ENV: Entorno de ejecución
+- SWAPI_BASE:  Base URL del API SWAPI
+- DYNAMO_AWS_REGION: Región AWS donde se creo la tabla dynamo
+- DYNAMO_TABLE_VEHICULOS: nombre de la tabla dynamo db
+
 
 # Rutas
   - GET - https://opmijdk3rj.execute-api.us-east-1.amazonaws.com/dev/ : Hola mundo
@@ -29,29 +37,36 @@
 
 # Copiar para hacer prueba POST
 
-{
-  "clase": "wheeled",
-  "capacidadPasajeros": "30",
-  "enlacePilotos": [
-    
-  ],
-  "nombre": "Sand Crawler",
-  "fechaCreacion": "2014-12-10T15:36:25.724000Z",
-  "enlace": "https://swapi.py4e.com/api/vehicles/4/",
-  "capacidadTransporteKg": "50000",
-  "fechaEdicion": "2014-12-20T21:30:21.661000Z",
-  "tiempoDuracionAlimentos": "2 months",
-  "maximaVelocidadAtm": "30",
-  "numeroPersonal": "46",
-  "longitudMtr": "36.8 ",
-  "enlacePeliculasDondeAparecio": [
-    "https://swapi.py4e.com/api/films/1/",
-    "https://swapi.py4e.com/api/films/5/"
-  ],
-  "nombreOficial": "Digger Crawler",
-  "costoCreditosGalacticos": "150000",
-  "fabricante": "Corellia Mining Corporation"
-}
+    {
+      "clase": "wheeled",
+      "capacidadPasajeros": "30",
+      "enlacePilotos": [
+        
+      ],
+      "nombre": "Sand Crawler",
+      "fechaCreacion": "2014-12-10T15:36:25.724000Z",
+      "enlace": "https://swapi.py4e.com/api/vehicles/4/",
+      "capacidadTransporteKg": "50000",
+      "fechaEdicion": "2014-12-20T21:30:21.661000Z",
+      "tiempoDuracionAlimentos": "2 months",
+      "maximaVelocidadAtm": "30",
+      "numeroPersonal": "46",
+      "longitudMtr": "36.8 ",
+      "enlacePeliculasDondeAparecio": [
+        "https://swapi.py4e.com/api/films/1/",
+        "https://swapi.py4e.com/api/films/5/"
+      ],
+      "nombreOficial": "Digger Crawler",
+      "costoCreditosGalacticos": "150000",
+      "fabricante": "Corellia Mining Corporation"
+    }
 
+# Ejemplo params-< stage >.yml 
 
-
+    app:
+      env: "development"
+      swapi: "https://swapi.py4e.com/api/"
+    databases:
+      dynamo:
+        region: "us-east-1"
+        tableVehiculo: "dev-api-table-vehiculos"
