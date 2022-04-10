@@ -1,0 +1,46 @@
+service: aws-example
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 128
+  timeout: 10
+  environment:
+    NODE_ENV: ${file(./env/params-${self:custom.stage}.yml):app.env}
+    SWAPI_BASE: ${file(./env/params-${self:custom.stage}.yml):app.swapi}
+    DYNAMO_AWS_REGION: ${file(./env/params-${self:custom.stage}.yml):databases.dynamo.region}
+    DYNAMO_TABLE_VEHICULOS: ${file(./env/params-${self:custom.stage}.yml):databases.dynamo.tableVehiculo}
+custom:
+  stage: ${opt:stage, 'dev'}
+  serverless-offline:
+    httpPort: 3032
+    prefix: ""
+    noPrependStageInUrl: true
+functions:
+  hello-world:
+    handler: app.handler
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+      - http:
+          path: /open-api.json
+          method: get
+          cors: true
+      - http:
+          path: /open-api.yml
+          method: get
+          cors: true
+      - http:
+          path: /swapi/vehiculos
+          method: get
+          cors: true
+      - http:
+          path: /swapi/vehiculos
+          method: post
+          cors: true
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline

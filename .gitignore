@@ -1,0 +1,7 @@
+commands
+env/
+.build/
+.serverless/
+package-lock.json
+node_modules/
+.env
